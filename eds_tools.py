@@ -70,8 +70,10 @@ def list_user_projects():
     '''  
     url = eds_routes.PROJECTS['list']
     response: project.PageOfProjectDTO = req_with_token('get', url, schema=project.PageOfProjectDTO)
-    response.
-    return response
+    
+    # Get only IDs and titles of the projects
+    projects = [{ "id": p.id, "title": p.title } for p in response.content]
+    return projects
 
 
 if __name__ == '__main__':
