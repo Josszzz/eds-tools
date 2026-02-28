@@ -59,7 +59,6 @@ def req_with_token(method: str | bytes, url: str | bytes, schema: BaseModel | No
 
     if schema:
         json_data= response.json()
-        print(list(json_data.keys()))
         response = schema.model_validate(json_data)
     return response
 
@@ -72,7 +71,7 @@ def list_user_projects():
     response: project.PageOfProjectDTO = req_with_token('get', url, schema=project.PageOfProjectDTO)
     
     # Get only IDs and titles of the projects
-    projects = [{ "id": p.id, "title": p.title } for p in response.content]
+    projects = {p.id:  p.projectShortName for p in response.content}
     return projects
 
 
